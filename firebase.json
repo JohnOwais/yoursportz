@@ -1,0 +1,25 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "yoursportzapp",
+                    "appId": "1:621634067913:android:7f0d1eec341cc66bcd9c18",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "yoursportzapp",
+                    "configurations": {
+                        "android": "1:621634067913:android:7f0d1eec341cc66bcd9c18",
+                        "ios": "1:621634067913:ios:25ebf4b84895a10fcd9c18",
+                        "macos": "1:621634067913:ios:25ebf4b84895a10fcd9c18",
+                        "web": "1:621634067913:web:6066de0429447a99cd9c18",
+                        "windows": "1:621634067913:web:4f176e0767ee63bccd9c18"
+                    }
+                }
+            }
+        }
+    }
+}

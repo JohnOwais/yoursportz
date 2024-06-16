@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "621634067913",
+    "project_id": "yoursportzapp",
+    "storage_bucket": "yoursportzapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621634067913:android:7f0d1eec341cc66bcd9c18",
+        "android_client_info": {
+          "package_name": "com.yoursportz.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621634067913-2vccpm0sch4cenr5drcnn0f2dr53tc39.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yoursportz.app",
+            "certificate_hash": "96e3c3668577bbd1d25945347dfe8e7e403ea27f"
+          }
+        },
+        {
+          "client_id": "621634067913-f70u7lulbrjpgk8drlvfnv0gcgpl4imc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yoursportz.app",
+            "certificate_hash": "4eca53f1f0fa2839c5d4bc7fab38414499f373cc"
+          }
+        },
+        {
+          "client_id": "621634067913-2otfbej0frf0t1udsovv01r62cplf16h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPjROznDovFzXCZpOu1WGdJ7pDUfqKj6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621634067913-2otfbej0frf0t1udsovv01r62cplf16h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "621634067913-sk1bh65nm15kh92ehh1o48vlo2pf28vm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yoursportz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
