@@ -388,7 +388,7 @@ class _EditTeamState extends State<EditTeam> {
                             ),
                             backgroundColor: Colors.white),
                         child: const Padding(
-                          padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                          padding: EdgeInsets.all(12),
                           child: Text("Add Player",
                               style: TextStyle(
                                   color: Color(0xff554585),

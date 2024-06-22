@@ -8,6 +8,9 @@ import 'package:hive/hive.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:yoursportz/home/change_language.dart';
+import 'package:yoursportz/home/settings.dart';
 import 'package:yoursportz/start_match/select_ground.dart';
 import 'package:yoursportz/tournament/ongoing_tournaments.dart';
 import 'package:yoursportz/create_team/create_team.dart';
@@ -462,7 +465,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               onTap: () {
-                // Handle navigation to Item 1
+                Navigator.pop(context);
+                Share.share(
+                    'Download YourSportz on the App Store and Google Play to stay connected with your local football arena! 📲⚽\n\n👉 iOS App: https://www.apple.com/in/search/YourSportz \n\n👉 Android App: https://play.google.com/store/apps/details?id=com.eternachat.app');
               },
             ),
             ListTile(
@@ -477,7 +482,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               onTap: () {
-                // Handle navigation to Item 1
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) =>
+                            ChangeLanguage(phone: widget.phone))));
               },
             ),
             ListTile(
@@ -492,7 +502,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               onTap: () {
-                // Handle navigation to Item 1
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => Settings(phone: widget.phone))));
               },
             ),
           ],

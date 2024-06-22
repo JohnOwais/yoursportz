@@ -134,26 +134,24 @@ class _TeamDetailsState extends State<TeamDetails> {
           surfaceTintColor: Colors.white,
         ),
         body: isLoading
-            ? const Expanded(child: Center(child: CircularProgressIndicator()))
-            : Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: ListView.builder(
-                    itemCount: players.length,
-                    itemBuilder: (context, index) {
-                      final player = players[index];
-                      return player['name']
-                              .toString()
-                              .toLowerCase()
-                              .contains(filterText.toLowerCase())
-                          ? Player(
-                              dp: player['dp'],
-                              name: player['name'],
-                              city: player['city'],
-                            )
-                          : const SizedBox();
-                    },
-                  ),
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(4),
+                child: ListView.builder(
+                  itemCount: players.length,
+                  itemBuilder: (context, index) {
+                    final player = players[index];
+                    return player['name']
+                            .toString()
+                            .toLowerCase()
+                            .contains(filterText.toLowerCase())
+                        ? Player(
+                            dp: player['dp'],
+                            name: player['name'],
+                            city: player['city'],
+                          )
+                        : const SizedBox();
+                  },
                 ),
               ));
   }
