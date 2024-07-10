@@ -467,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.pop(context);
                 Share.share(
-                    'Download YourSportz on the App Store and Google Play to stay connected with your local football arena! 📲⚽\n\n👉 iOS App: https://www.apple.com/in/search/YourSportz \n\n👉 Android App: https://play.google.com/store/apps/details?id=com.eternachat.app');
+                    'Download YourSportz on the App Store and Google Play to stay connected with your local football arena! 📲⚽\n\n👉 iOS App: https://www.apple.com/in/search/YourSportz \n\n👉 Android App: https://play.google.com/store/apps/details?id=com.yoursportz.app');
               },
             ),
             ListTile(

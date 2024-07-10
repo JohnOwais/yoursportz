@@ -16,6 +16,7 @@ class SelectedPlayers extends StatefulWidget {
       required this.city,
       required this.phone,
       required this.imageUrl,
+      required this.addBack,
       required this.source});
 
   final List<Map<String, dynamic>> selectedPlayers;
@@ -24,6 +25,7 @@ class SelectedPlayers extends StatefulWidget {
   final String city;
   final String phone;
   final String imageUrl;
+  final Function(Map<String, dynamic>) addBack;
   final String source;
 
   @override
@@ -101,46 +103,104 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.transparent,
-                          child: ClipOval(
-                            child: Image.network(
-                              player['dp'],
-                              height: 50,
-                              width: 50,
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(32),
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 35,
+                              backgroundColor: Colors.transparent,
+                              child: ClipOval(
+                                child: Image.network(
+                                  player['dp'],
+                                  height: 50,
+                                  width: 50,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    }
+                                    return Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(32),
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
                                                   null
                                               ? loadingProgress
                                                       .cumulativeBytesLoaded /
                                                   loadingProgress
                                                       .expectedTotalBytes!
                                               : null,
-                                    ),
-                                  ),
-                                );
-                              },
-                              errorBuilder: (BuildContext context,
-                                  Object exception, StackTrace? stackTrace) {
-                                return Image.asset(
-                                  'assets/images/dp.png',
-                                  height: 50,
-                                  width: 50,
-                                );
-                              },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/dp.png',
+                                      height: 50,
+                                      width: 50,
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                if (widget.selectedPlayers.length == 5) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "Team must have atleast 5 players",
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                          backgroundColor: Colors.red));
+                                  return;
+                                }
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: const Text("Remove Player"),
+                                          content: Text(
+                                              "Sure to remove ${player['name']}?"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("No")),
+                                            TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.addBack(player);
+                                                    widget.selectedPlayers
+                                                        .remove(player);
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("Yes",
+                                                    style: TextStyle(
+                                                        color: Colors.red))),
+                                          ],
+                                        ));
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(2),
+                                    child: Icon(
+                                      Icons.close_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(width: 16)
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),

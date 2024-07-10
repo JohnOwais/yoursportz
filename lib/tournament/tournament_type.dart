@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yoursportz/tournament/tournament_rules.dart';
 
 class SelectTournamentType extends StatefulWidget {
-  const SelectTournamentType({super.key, required String phone});
+  const SelectTournamentType(
+      {super.key, required this.phone, required this.tournamentId});
+
+  final String phone;
+  final String tournamentId;
 
   @override
   State<SelectTournamentType> createState() => _SelectTournamentTypeState();
@@ -22,25 +26,34 @@ class _SelectTournamentTypeState extends State<SelectTournamentType> {
           "assets/images/round_bg.jpg",
           fit: BoxFit.cover,
         )),
-        const Padding(
-          padding: EdgeInsets.all(4),
+        Padding(
+          padding: const EdgeInsets.all(4),
           child: Column(children: [
             TournamentOption(
-              title: "Round Robbin",
-              icon: Icons.sports_soccer,
-            ),
+                phone: widget.phone,
+                title: "Round Robbin",
+                icon: Icons.restart_alt,
+                tournamentId: widget.tournamentId),
             TournamentOption(
-              title: "Knockout",
-              icon: Icons.sports_mma,
-            ),
+                phone: widget.phone,
+                title: "League Matches",
+                icon: Icons.sports_soccer,
+                tournamentId: widget.tournamentId),
             TournamentOption(
-              title: "Semi-Final",
-              icon: Icons.emoji_events,
-            ),
+                phone: widget.phone,
+                title: "Knockout",
+                icon: Icons.sports_mma,
+                tournamentId: widget.tournamentId),
             TournamentOption(
-              title: "Final",
-              icon: Icons.celebration,
-            ),
+                phone: widget.phone,
+                title: "Semi-Final",
+                icon: Icons.emoji_events,
+                tournamentId: widget.tournamentId),
+            TournamentOption(
+                phone: widget.phone,
+                title: "Final",
+                icon: Icons.celebration,
+                tournamentId: widget.tournamentId),
           ]),
         )
       ]),
@@ -49,27 +62,32 @@ class _SelectTournamentTypeState extends State<SelectTournamentType> {
 }
 
 class TournamentOption extends StatelessWidget {
-  const TournamentOption({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
+  const TournamentOption(
+      {super.key,
+      required this.phone,
+      required this.title,
+      required this.icon,
+      required this.tournamentId});
 
+  final String phone;
   final String title;
   final IconData icon;
+  final String tournamentId;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: ((context) =>
-                      const TournamentRules(phone: '919149764646'))));
-        },
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TournamentRules(
+                    phone: phone,
+                    tournamentId: tournamentId,
+                    tournamentType: title)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(4),
         child: Card(
           color: Colors.white,
           child: Padding(

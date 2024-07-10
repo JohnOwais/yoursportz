@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 
-class InviteTournament extends StatefulWidget {
-  const InviteTournament({super.key, required this.phone});
-  final String phone;
+class ShareInviteTournament extends StatefulWidget {
+  const ShareInviteTournament(
+      {super.key, required this.link, required this.type});
+
+  final String link;
+  final String type;
+
   @override
-  State<InviteTournament> createState() => _InviteTournamentState();
+  State<ShareInviteTournament> createState() => _ShareInviteTournamentState();
 }
 
-class _InviteTournamentState extends State<InviteTournament> {
+class _ShareInviteTournamentState extends State<ShareInviteTournament> {
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 235, 235, 240),
       appBar: AppBar(
-        title: const Text('Invite Teams'),
+        title:
+            Text(widget.type == "share" ? 'Share Tournament' : 'Invite Teams'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,25 +28,27 @@ class _InviteTournamentState extends State<InviteTournament> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8), color: Colors.white),
-              child: const Padding(
-                padding: EdgeInsets.all(16),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Share Tournament Link",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 8),
                           Text(
-                              'https://hgdsfgasdhfgasdhfgasdjfkh/fgjdsgfasdhfghds/fgjhasdfhjgfdasjhgfasjfg'),
+                              widget.type == "share"
+                                  ? "Share Tournament Link"
+                                  : "Invite Tournament Link",
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
+                          Text(widget.link),
                         ],
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_forward_ios),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.arrow_forward_ios),
                   ],
                 ),
               ),
@@ -58,8 +65,11 @@ class _InviteTournamentState extends State<InviteTournament> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Add Via QR Code",
-                              style: TextStyle(
+                          Text(
+                              widget.type == "share"
+                                  ? "Share Via QR Code"
+                                  : "Invite Via QR Code",
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           Image.asset(
@@ -71,25 +81,6 @@ class _InviteTournamentState extends State<InviteTournament> {
                     ),
                     const SizedBox(width: 8),
                     const Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8), color: Colors.white),
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(16, 24, 16, 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text("Add Manually",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.add),
                   ],
                 ),
               ),

@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:share_plus/share_plus.dart';
 import 'package:yoursportz/create_team/selected_players.dart';
 
 List<Map<String, dynamic>> selectedPlayers = [];
@@ -131,68 +130,40 @@ class _AddPlayersState extends State<AddPlayers> {
               ),
             ),
           ),
-          filterText.isEmpty
-              ? Expanded(
-                  child: Center(
-                      child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(32, 0, 32, 16),
-                      child: Text(
-                        "Now create multiple players and add them to your team instantly to build your team",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey),
-                      ),
+          userLoading
+              ? const Expanded(
+                  child: Center(child: CircularProgressIndicator()))
+              : Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: ListView.builder(
+                      itemCount: players.length,
+                      itemBuilder: (context, index) {
+                        final player = players[index];
+                        final willAddSelf = widget.selfAdd
+                            ? true
+                            : widget.phone != player['phone'];
+                        return player['name']
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(filterText.toLowerCase()) &&
+                                willAddSelf
+                            ? Player(
+                                dp: player['dp'],
+                                name: player['name'],
+                                phone: player['phone'],
+                                city: player['city'],
+                                index: index,
+                                remove: (i) {
+                                  setState(() {
+                                    players.removeAt(i);
+                                  });
+                                })
+                            : const SizedBox();
+                      },
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.cyan,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8))),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => const AddExtraPlayer());
-                        },
-                        child: const Text("Add Player",
-                            style: TextStyle(color: Colors.white))),
-                  ],
-                )))
-              : userLoading
-                  ? const Expanded(
-                      child: Center(child: CircularProgressIndicator()))
-                  : Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: ListView.builder(
-                          itemCount: players.length,
-                          itemBuilder: (context, index) {
-                            final player = players[index];
-                            final willAddSelf = widget.selfAdd
-                                ? true
-                                : widget.phone != player['phone'];
-                            return player['name']
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains(filterText.toLowerCase()) &&
-                                    willAddSelf
-                                ? Player(
-                                    dp: player['dp'],
-                                    name: player['name'],
-                                    phone: player['phone'],
-                                    city: player['city'],
-                                    index: index,
-                                    remove: (i) {
-                                      setState(() {
-                                        players.removeAt(i);
-                                      });
-                                    })
-                                : const SizedBox();
-                          },
-                        ),
-                      ),
-                    ),
+                  ),
+                ),
           Padding(
             padding: const EdgeInsets.all(8),
             child: Row(
@@ -200,17 +171,9 @@ class _AddPlayersState extends State<AddPlayers> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Share.share(
-                          'Download YourSportz on the App Store and Google Play to stay connected with your local football arena! 📲⚽\n\n👉 iOS App: https://www.apple.com/in/search/YourSportz \n\n👉 Android App: https://play.google.com/store/apps/details?id=com.eternachat.app');
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => InvitePlayers(
-                      //             teamName: widget.teamName,
-                      //             city: widget.city,
-                      //             phone: widget.phone,
-                      //             imageUrl: widget.imageUrl,
-                      //             token: widget.token)));
+                      showDialog(
+                          context: context,
+                          builder: (context) => const AddExtraPlayer());
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -219,7 +182,7 @@ class _AddPlayersState extends State<AddPlayers> {
                         backgroundColor: Colors.white),
                     child: const Padding(
                       padding: EdgeInsets.all(12),
-                      child: Text("Invite Players",
+                      child: Text("Create Player",
                           style: TextStyle(
                               color: Color(0xff554585),
                               fontWeight: FontWeight.bold)),
@@ -249,6 +212,11 @@ class _AddPlayersState extends State<AddPlayers> {
                                     city: widget.city,
                                     phone: widget.phone,
                                     imageUrl: widget.imageUrl,
+                                    addBack: (final player) {
+                                      setState(() {
+                                        players.add(player);
+                                      });
+                                    },
                                     source: widget.source))));
                       }
                     },
@@ -287,12 +255,12 @@ class AddExtraPlayer extends StatefulWidget {
 class _AddExtraPlayerState extends State<AddExtraPlayer> {
   final nameController = TextEditingController();
   final cityController = TextEditingController();
-  final userController = TextEditingController();
+  final phoneController = TextEditingController();
   var nameValid = true;
   var cityValid = true;
-  var userValid = true;
+  var phoneValid = true;
   var isLoading = false;
-  var usernameTaken = false;
+  var phoneNumberExists = false;
 
   @override
   Widget build(BuildContext context) {
@@ -305,12 +273,13 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
           child: Column(children: [
             const Padding(
               padding: EdgeInsets.all(8),
-              child: Text("Add Player", style: TextStyle(fontSize: 20)),
+              child: Text("Create Player", style: TextStyle(fontSize: 20)),
             ),
             InputText(
                 controller: nameController,
                 icon: Icons.person,
                 hint: "Player Name",
+                keyboard: TextInputType.name,
                 min: 3,
                 max: 30,
                 error: "Can't be less than 3 characters",
@@ -324,6 +293,7 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                 controller: cityController,
                 icon: Icons.location_city,
                 hint: "City",
+                keyboard: TextInputType.streetAddress,
                 min: 1,
                 max: 20,
                 error: "Can't be empty",
@@ -334,24 +304,25 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                   });
                 }),
             InputText(
-                controller: userController,
-                icon: Icons.person_2_outlined,
-                hint: "Username",
-                min: 3,
+                controller: phoneController,
+                icon: Icons.phone,
+                hint: "Phone No.",
+                keyboard: TextInputType.number,
+                min: 10,
                 max: 10,
-                error: "Can't be less than 3 characters",
-                valid: userValid,
+                error: "Can't be less than 10 digits",
+                valid: phoneValid,
                 updateValid: (bool isValid) {
                   setState(() {
-                    userValid = isValid;
+                    phoneValid = isValid;
                   });
                 }),
-            usernameTaken
+            phoneNumberExists
                 ? const Padding(
                     padding: EdgeInsets.all(4),
                     child: Row(
                       children: [
-                        Text("Username already taken",
+                        Text("Phone number already registered",
                             style: TextStyle(color: Colors.red)),
                       ],
                     ),
@@ -365,13 +336,13 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                     child: ElevatedButton(
                       onPressed: () async {
                         setState(() {
-                          usernameTaken = false;
+                          phoneNumberExists = false;
                         });
                         nameController.text = nameController.text.trim();
                         cityController.text = cityController.text.trim();
-                        userController.text = userController.text.trim();
-                        userController.text =
-                            userController.text.replaceAll(" ", "");
+                        phoneController.text = phoneController.text.trim();
+                        phoneController.text =
+                            phoneController.text.replaceAll(" ", "");
                         if (nameController.text.length < 3) {
                           setState(() {
                             nameValid = false;
@@ -380,16 +351,17 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                           setState(() {
                             cityValid = false;
                           });
-                        } else if (userController.text.length < 3) {
+                        } else if (phoneController.text.length != 10) {
                           setState(() {
-                            userValid = false;
+                            phoneValid = false;
                           });
                         } else {
                           setState(() {
                             isLoading = true;
                           });
-                          final body = jsonEncode(
-                              <String, dynamic>{'userId': userController.text});
+                          final body = jsonEncode(<String, dynamic>{
+                            'userId': phoneController.text
+                          });
                           final response = await http.post(
                               Uri.parse(
                                   "https://yoursportzbackend.azurewebsites.net/api/auth/check-user/"),
@@ -402,7 +374,7 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                               jsonDecode(response.body);
                           if (responseData['message'] == "success") {
                             final body = jsonEncode(<String, dynamic>{
-                              'phone': userController.text,
+                              'phone': phoneController.text,
                               'name': nameController.text,
                               'city': cityController.text,
                             });
@@ -422,7 +394,7 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                               });
                               selectedPlayers.add({
                                 'dp': "",
-                                'phone': userController.text,
+                                'phone': phoneController.text,
                                 'name': nameController.text,
                                 'city': cityController.text,
                               });
@@ -442,7 +414,7 @@ class _AddExtraPlayerState extends State<AddExtraPlayer> {
                           } else {
                             setState(() {
                               isLoading = false;
-                              usernameTaken = true;
+                              phoneNumberExists = true;
                             });
                           }
                         }
@@ -483,6 +455,7 @@ class InputText extends StatelessWidget {
       required this.controller,
       required this.icon,
       required this.hint,
+      required this.keyboard,
       required this.min,
       required this.max,
       required this.error,
@@ -492,6 +465,7 @@ class InputText extends StatelessWidget {
   final TextEditingController controller;
   final IconData icon;
   final String hint;
+  final TextInputType keyboard;
   final int min;
   final int max;
   final String error;
@@ -504,6 +478,7 @@ class InputText extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       child: TextField(
         controller: controller,
+        keyboardType: keyboard,
         inputFormatters: [LengthLimitingTextInputFormatter(max)],
         onChanged: (value) {
           if (value.length >= min) {
