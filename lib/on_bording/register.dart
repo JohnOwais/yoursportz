@@ -274,7 +274,7 @@ class _UserDetailsState extends State<UserDetails> {
                       setState(() {
                         nameValid = false;
                       });
-                    } else if (dateOfBirth.length > 11) {
+                    } else if (dateOfBirth == "Date of Birth") {
                       setState(() {
                         dobValid = false;
                       });

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:yoursportz/tournament/ongoing_tournaments.dart';
 
-class AddTeamsToGroups extends StatefulWidget {
-  const AddTeamsToGroups(
+class GroupTeams extends StatefulWidget {
+  const GroupTeams(
       {super.key,
       required this.phone,
       required this.tournamentId,
@@ -22,10 +22,10 @@ class AddTeamsToGroups extends StatefulWidget {
   final String numberOfGroups;
 
   @override
-  State<AddTeamsToGroups> createState() => _AddTeamsToGroupsState();
+  State<GroupTeams> createState() => _GroupTeamsState();
 }
 
-class _AddTeamsToGroupsState extends State<AddTeamsToGroups> {
+class _GroupTeamsState extends State<GroupTeams> {
   List<Map<String, dynamic>> teams = [];
   List<List<Map<String, dynamic>>> groupedTeams = [[]];
   var currentSelection = 1;
@@ -172,6 +172,7 @@ class _AddTeamsToGroupsState extends State<AddTeamsToGroups> {
                                     final Map<String, dynamic> responseData =
                                         jsonDecode(response.body);
                                     if (responseData['message'] == "success") {
+                                      Navigator.pop(context);
                                       Navigator.pop(context);
                                       Navigator.pop(context);
                                       Navigator.push(

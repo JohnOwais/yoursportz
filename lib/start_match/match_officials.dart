@@ -1500,10 +1500,16 @@ class _UserState extends State<User> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.name,
+                Text(
+                    widget.name.length <= 12
+                        ? widget.name
+                        : widget.name.substring(0, 12),
                     style: const TextStyle(
                         fontSize: 13, fontWeight: FontWeight.bold)),
-                Text(widget.city,
+                Text(
+                    widget.city.length <= 12
+                        ? widget.city
+                        : widget.city.substring(0, 12),
                     style: const TextStyle(fontSize: 12, color: Colors.grey))
               ],
             ),

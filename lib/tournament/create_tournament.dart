@@ -480,7 +480,10 @@ class _CreateTournamentState extends State<CreateTournament> {
                                         onChanged: (String? value) {
                                           setState(() {
                                             gameTime = value!;
-                                            if (gameTime == "30 minutes") {
+                                            if (gameTime == "20 minutes") {
+                                              firstHalf = "10 minutes";
+                                            } else if (gameTime ==
+                                                "30 minutes") {
                                               firstHalf = "15 minutes";
                                             } else if (gameTime ==
                                                 "60 minutes") {
@@ -492,6 +495,7 @@ class _CreateTournamentState extends State<CreateTournament> {
                                           });
                                         },
                                         items: <String>[
+                                          '20 minutes',
                                           '30 minutes',
                                           '60 minutes',
                                           '90 minutes'

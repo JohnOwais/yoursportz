@@ -51,7 +51,12 @@ class _AddTeamsToTournamentState extends State<AddTeamsToTournament> {
         surfaceTintColor: Colors.white,
       ),
       body: teamsLoading
-          ? const Expanded(child: Center(child: CircularProgressIndicator()))
+          ? const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: CircularProgressIndicator()),
+              ],
+            )
           : Stack(
               children: [
                 Padding(
@@ -158,6 +163,7 @@ class _AddTeamsToTournamentState extends State<AddTeamsToTournament> {
                               if (responseData['message'] == "success") {
                                 Navigator.pop(context);
                                 Navigator.pop(context);
+                                Navigator.pop(context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -250,7 +256,7 @@ class Team extends StatelessWidget {
                     }
                     return Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(16),
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /

@@ -564,10 +564,16 @@ class _PlayerState extends State<Player> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.name,
+                Text(
+                    widget.name.length <= 15
+                        ? widget.name
+                        : widget.name.substring(0, 15),
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold)),
-                Text(widget.city,
+                Text(
+                    widget.city.length <= 15
+                        ? widget.city
+                        : widget.city.substring(0, 15),
                     style: const TextStyle(fontSize: 13, color: Colors.grey))
               ],
             ),

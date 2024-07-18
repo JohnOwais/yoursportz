@@ -397,6 +397,9 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                       context: context,
                                       builder: ((context) => Center(
                                             child: Dialog(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 235, 235, 240),
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -415,6 +418,9 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
+                                                    ),
+                                                    const Divider(
+                                                      height: 0,
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -570,10 +576,12 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                                                     ),
                                                                     const Spacer(),
                                                                     Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              8),
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          8,
+                                                                          0,
+                                                                          0,
+                                                                          8),
                                                                       child:
                                                                           Row(
                                                                         children: [
@@ -688,6 +696,9 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                       context: context,
                                       builder: ((context) => Center(
                                             child: Dialog(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 235, 235, 240),
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -706,6 +717,9 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
+                                                    ),
+                                                    const Divider(
+                                                      height: 0,
                                                     ),
                                                     Expanded(
                                                       child: Padding(
@@ -861,10 +875,12 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
                                                                     ),
                                                                     const Spacer(),
                                                                     Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              8),
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          8,
+                                                                          0,
+                                                                          0,
+                                                                          8),
                                                                       child:
                                                                           Row(
                                                                         children: [

@@ -211,7 +211,7 @@ class _EditTeamState extends State<EditTeam> {
                                       }
                                       return Center(
                                         child: Padding(
-                                          padding: const EdgeInsets.all(32),
+                                          padding: const EdgeInsets.all(16),
                                           child: CircularProgressIndicator(
                                             value: loadingProgress
                                                         .expectedTotalBytes !=
@@ -548,7 +548,7 @@ class _EditTeamState extends State<EditTeam> {
                                 ))
                             : const Padding(
                                 padding: EdgeInsets.all(12),
-                                child: Text("Save Changes",
+                                child: Text("Save",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),

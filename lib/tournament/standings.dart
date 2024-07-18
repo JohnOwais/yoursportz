@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:yoursportz/tournament/tab_options/about.dart';
-import 'package:yoursportz/tournament/tab_options/gallery.dart';
-import 'package:yoursportz/tournament/tab_options/matches.dart';
-import 'package:yoursportz/tournament/tab_options/points_table.dart';
-import 'package:yoursportz/tournament/tab_options/teams.dart';
+import 'package:yoursportz/tournament/standings_tabs/about.dart';
+import 'package:yoursportz/tournament/standings_tabs/gallery.dart';
+import 'package:yoursportz/tournament/standings_tabs/matches.dart';
+import 'package:yoursportz/tournament/standings_tabs/points_table.dart';
+import 'package:yoursportz/tournament/standings_tabs/teams.dart';
 
 class Standings extends StatefulWidget {
   const Standings({super.key, required this.tournament});
@@ -85,7 +85,7 @@ class _StandingsState extends State<Standings> {
                       style: const TextStyle(
                           color: Colors.black54,
                           fontSize: 14,
-                          fontWeight: FontWeight.w800),
+                          fontWeight: FontWeight.w500),
                     )
                   ],
                 )
@@ -222,7 +222,7 @@ class _StandingsState extends State<Standings> {
             else if (selectedTab == "Teams")
               Expanded(child: Teams(tournament: widget.tournament))
             else if (selectedTab == "Matches")
-              Matches(tournament: widget.tournament)
+              Expanded(child: Matches(tournament: widget.tournament))
             else if (selectedTab == "Points Table")
               PointsTable(tournament: widget.tournament)
             else if (selectedTab == "Gallery")

@@ -121,7 +121,7 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
                                     }
                                     return Center(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(32),
+                                        padding: const EdgeInsets.all(16),
                                         child: CircularProgressIndicator(
                                           value: loadingProgress
                                                       .expectedTotalBytes !=
@@ -205,7 +205,9 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                           child: Text(
-                            player['name'],
+                            player['name'].length <= 15
+                                ? player['name']
+                                : player['name'].substring(0, 15),
                             style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -218,7 +220,9 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
                                   size: 13, color: Colors.grey),
                               const SizedBox(width: 4),
                               Text(
-                                player['city'],
+                                player['city'].length <= 15
+                                    ? player['city']
+                                    : player['city'].substring(0, 15),
                                 style: const TextStyle(
                                     fontSize: 13, color: Colors.grey),
                               ),
